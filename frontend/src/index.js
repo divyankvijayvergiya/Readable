@@ -5,8 +5,8 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware} from 'redux';
 import './index.css';
 import App from './containers/App'
-import  thunk from redux-thunk;
-import reducer from './reducers';
+import  thunk from 'redux-thunk';
+import reducers from './reducers';
 import registerServiceWorker from './registerServiceWorker';
 
 const store = createStore(
