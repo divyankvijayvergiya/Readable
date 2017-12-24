@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
+import {fetchCategories, fetchPosts} from '../utils/api'
 import logo from '../logo.svg';
 
 class App extends Component {
+  componentDidMount(){
+    fetchCategories();
+    fetchPosts();
+  }
   render() {
     return (
       <div className="App">
