@@ -63,7 +63,7 @@ export const updatePost = post =>{
     .then(data=> data)
 }
 
-export const removePost = post =>{
+export const removePost = id =>{
   fetch(`${api}/posts/${id}`,{
     method : 'DELETE',
     headers,
@@ -120,7 +120,7 @@ export const updateComment = comment =>{
     .then(data=> data)
 }
 
-export const removeComment = comment =>{
+export const removeComment = id =>{
   fetch(`${api}/comments/${id}`,{
     method : 'DELETE',
     headers,
