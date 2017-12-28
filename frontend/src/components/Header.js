@@ -4,7 +4,7 @@ import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 import {fetchCategories} from '../actions/categories';
 
 class Header extends Component{
-  compnentDidMount(){
+  componentDidMount(){
     this.props.fetchCategories();
   }
   render(){
@@ -23,8 +23,12 @@ class Header extends Component{
           <NavItem eventKey={2} href="#">Link</NavItem>
           <NavDropdown eventKey={3} title="Categories" id="basic-nav-dropdown">
             {categories.length >0 && categories.map(( category, key ) =>{
-              <MenuItem eventKey={key}>(category.name)</MenuItem>
-            })}
+                const {name, path} = category
+                return (
+
+                  <MenuItem key={path} eventKey={key}>{name}</MenuItem>
+                )
+              })}
 
           </NavDropdown>
         </Nav>
@@ -38,7 +42,7 @@ class Header extends Component{
   }
 }
 const mapStateToProps = ({ categories })=> ({
-  categories,
+  categories: Object.keys(categories).map(k => categories[k]),
 })
 const mapDispatchToProps = dispatch => ({
   fetchCategories:()=> dispatch(fetchCategories()) ,

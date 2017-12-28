@@ -1,129 +1,130 @@
-const api = "http://localhost:3001"
+const api = 'http://localhost:3001';
+
 let token = localStorage.token;
-if(!token)
-  token = localStorage.token = Math.random().toString(36).substr(-8)
+if (!token)
+  token = localStorage.token = Math.random().toString(36).substr(-8);
 
-const headers ={
-  "Accept": "application/json",
-  "Content-Type": "application/json",
-  "Authorization": token
+const headers = {
+  'Accept': 'application/json',
+  'Content-Type': 'application/json',
+  'Authorization': token
 }
-//categories
-export const fetchCategories= () =>
-  fetch(`${api}/categories`,{headers})
-    .then(res=> res.json())
-    .then(data=> data.categories)
 
-//posts
-export const fetchPosts= (category) =>{
+// Categories
+export const fetchCategories = () =>
+  fetch(`${api}/categories`, { headers })
+    .then(res => res.json())
+    .then(data => data.categories)
+
+
+// Posts
+export const fetchPosts = category => {
   const url = category ? `${api}/${category}/posts` : `${api}/posts`
-  fetch(url,{headers})
-    .then(res=> res.json())
-    .then(data=> data)
+  return fetch(url, { headers })
+    .then(res => res.json())
+    .then(data => data)
 }
 
-export const fetchPost = id =>{
-  fetch(`${api}/posts/${id}`,{headers})
-    .then(res=> res.json())
-    .then(data=> data)
-}
+export const fetchPost = id =>
+  fetch(`${api}/posts/${id}`, { headers })
+    .then(res => res.json())
+    .then(data => data)
 
-export const addPost = post =>{
+export const votePost = (id, vote) =>
+  fetch(`${api}/posts/${id}`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({
+      option: vote
+    })
+  }).then(res => res.json())
+    .then(data => data)
+
+export const addPost = post => {
   const data = {
     ...post,
-    timeStamp: Date.now()
+    timestamp: Date.now()
   }
-  fetch(`${api}/posts`,{
-    method : 'POST',
+
+  return fetch(`${api}/posts`, {
+    method: 'POST',
     headers,
-    body: JSON.stringify({ data })
-  }).then(res=> res.json())
-    .then(data=> data)
+    body: JSON.stringify(data)
+  }).then(res => res.json())
+    .then(data => data)
 }
 
-export const votePost = (id, option) =>{
-  fetch(`${api}/posts/${id}`,{
-    method : 'POST',
-    headers,
-    body: JSON.stringify({ option })
-  }).then(res=> res.json())
-    .then(data=> data)
-}
-
-export const updatePost = post =>{
+export const editPost = post => {
   const data = {
     ...post,
-    timeStamp: Date.now()
+    timestamp: Date.now()
   }
-  fetch(`${api}/posts/${post.id}`,{
-    method : 'PUT',
+
+  return fetch(`${api}/posts/${post.id}`, {
+    method: 'PUT',
     headers,
-    body: JSON.stringify({ data })
-  }).then(res=> res.json())
-    .then(data=> data)
+    body: JSON.stringify(data)
+  }).then(res => res.json())
+    .then(data => data)
 }
 
-export const removePost = id =>{
-  fetch(`${api}/posts/${id}`,{
-    method : 'DELETE',
+export const deletePost = post =>
+  fetch(`${api}/posts/${post.id}`, {
+    method: 'DELETE',
     headers,
-  }).then(res=> res.json())
-    .then(data=> data)
-}
+  }).then(res => res.json())
+    .then(data => data)
 
-//comments
+// Comments
+export const fetchComments = id =>
+  fetch(`${api}/posts/${id}/comments`, { headers })
+    .then(res => res.json())
+    .then(data => data)
 
-export const fetchComments= id =>{
-  fetch(`${api}/posts/${id}/comments`,{headers})
-    .then(res=> res.json())
-    .then(data=> data)
-}
+export const fetchComment = id =>
+  fetch(`${api}/comments/${id}`, { headers })
+    .then(res => res.json())
+    .then(data => data)
 
-export const fetchComment = id =>{
-  fetch(`${api}/comments/${id}`,{headers})
-    .then(res=> res.json())
-    .then(data=> data)
-}
-
-export const addComment = comment =>{
+export const addComment = comment => {
   const data = {
     ...comment,
-    timeStamp: Date.now()
+    timestamp: Date.now()
   }
-  fetch(`${api}/comments`,{
-    method : 'POST',
+
+  return fetch(`${api}/comments`, {
+    method: 'POST',
     headers,
-    body: JSON.stringify({ comment })
-  }).then(res=> res.json())
-    .then(data=> data)
+    body: JSON.stringify(data)
+  }).then(res => res.json())
+    .then(data => data)
 }
 
-export const voteComment = (id, option) =>{
-  fetch(`${api}/comments/${id}`,{
-    method : 'POST',
+export const voteComment = (id, option) =>
+  fetch(`${api}/comments/${id}`, {
+    method: 'POST',
     headers,
     body: JSON.stringify({ option })
-  }).then(res=> res.json())
-    .then(data=> data)
-}
+  }).then(res => res.json())
+    .then(data => data)
 
-export const updateComment = comment =>{
+export const editComment = comment => {
   const data = {
     ...comment,
-    timeStamp: Date.now()
+    timestamp: Date.now()
   }
-  fetch(`${api}/comments/${comment.id}`,{
-    method : 'PUT',
+
+  return fetch(`${api}/comments/${comment.id}`, {
+    method: 'PUT',
     headers,
-    body: JSON.stringify({ data })
-  }).then(res=> res.json())
-    .then(data=> data)
+    body: JSON.stringify(data)
+  }).then(res => res.json())
+    .then(data => data)
 }
 
-export const removeComment = id =>{
-  fetch(`${api}/comments/${id}`,{
-    method : 'DELETE',
+export const deleteComment = comment =>
+  fetch(`${api}/comments/${comment.id}`, {
+    method: 'DELETE',
     headers,
-  }).then(res=> res.json())
-    .then(data=> data)
-}
+  }).then(res => res.json())
+    .then(data => data)
