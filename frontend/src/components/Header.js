@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
-import {fetchCategories} from '../utils/api';
+import {fetchCategories} from '../actions/categories';
 
 class Header extends Component{
   compnentDidMount(){
-    fetchCategories();
+    this.props.fetchCategories();
   }
   render(){
+    const { categories } = this.props;
     return(
     <Navbar inverse collapseOnSelect>
       <Navbar.Header>
@@ -21,12 +22,11 @@ class Header extends Component{
           <NavItem eventKey={1} href="#">Link</NavItem>
           <NavItem eventKey={2} href="#">Link</NavItem>
           <NavDropdown eventKey={3} title="Categories" id="basic-nav-dropdown">
-          <MenuItem eventKey={3.1}>Action</MenuItem>
-          <MenuItem eventKey={3.2}>Another action</MenuItem>
-          <MenuItem eventKey={3.3}>Something else here</MenuItem>
-          <MenuItem divider />
-          <MenuItem eventKey={3.3}>Separated link</MenuItem>
-        </NavDropdown>
+            {categories.length >0 && categories.map(( category, key ) =>{
+              <MenuItem eventKey={key}>(category.name)</MenuItem>
+            })}
+
+          </NavDropdown>
         </Nav>
         <Nav pullRight>
           <NavItem eventKey={1} href="#">Link Right</NavItem>
@@ -37,5 +37,11 @@ class Header extends Component{
     );
   }
 }
+const mapStateToProps = ({ categories })=> ({
+  categories,
+})
+const mapDispatchToProps = dispatch => ({
+  fetchCategories:()=> dispatch(fetchCategories()) ,
+})
 
-export default connect()(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
