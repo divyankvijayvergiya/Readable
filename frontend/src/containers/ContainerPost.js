@@ -14,12 +14,18 @@ class ContainerPost extends Component{
     const { posts } = this.props;
 
     return (
-        <ListGroup>
-        {posts.length > 0 && posts.map((post, key) => {
-          <ListGroupItem header ={post.title}>{post.body}</ListGroupItem>
-        })}
+      <ListGroup>
+      {posts.length > 0 && posts.map((post) => {
+       return (
+         <ListGroupItem
+           key={post.key}
+           header={post.title}
+           >
+           {post.body}
+         </ListGroupItem>)
+     })}
 
-        </ListGroup>
+     </ListGroup>
 
     );
   }
@@ -27,7 +33,7 @@ class ContainerPost extends Component{
 }
 
 const mapStateToProps = ({ posts })=> ({
-  posts,
+  posts: Object.keys(posts.items).map(k => posts.items[k]),
 })
 const mapDispatchToProps = dispatch => ({
   fetchPosts:()=> dispatch(fetchPosts()) ,

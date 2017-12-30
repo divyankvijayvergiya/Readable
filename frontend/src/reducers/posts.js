@@ -1,6 +1,6 @@
 import { REQUEST_POSTS, RECEIVE_POSTS } from '../actions/constant';
 
-const posts = (state = {}, action) => {
+const posts = (state = {items: {}}, action) => {
   const {
     posts
   } = action;
@@ -8,7 +8,10 @@ const posts = (state = {}, action) => {
     case RECEIVE_POSTS:
       return {
         ...state,
-        posts,
+        items: action.posts.reduce((prev, post) => {
+          prev[post.id] = post
+          return prev
+        }, state.items )
       }
 
 
