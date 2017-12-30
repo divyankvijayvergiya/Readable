@@ -8,7 +8,9 @@ class App extends Component {
     return (
       <div className="App">
         <Header />
-        <ContainerPost/>
+        <div className= "container">
+          <ContainerPost/>
+        </div>
 
       </div>
     );

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {fetchPosts, fetchPostsByCategory} from '../actions/posts';
+import { ListGroup, ListGroupItem } from 'react-bootstrap';
+
 
 
 class ContainerPost extends Component{
@@ -9,8 +11,15 @@ class ContainerPost extends Component{
   }
 
   render(){
-    console.log(this.props.posts);
-    return <h3>Hello World</h3>;
+    return (
+      
+      <ListGroup>
+        <ListGroupItem header="Heading 1">Some body text</ListGroupItem>
+        <ListGroupItem header="Heading 2" href="#">Linked item</ListGroupItem>
+        <ListGroupItem header="Heading 3" bsStyle="danger">Danger styling</ListGroupItem>
+      </ListGroup>
+
+    );
   }
 
 }
