@@ -8,6 +8,7 @@ import App from './containers/App'
 import  thunk from 'redux-thunk';
 import reducers from './reducers';
 import './index.css';
+import promise from 'redux-promise-middleware';
 import registerServiceWorker from './registerServiceWorker';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -16,7 +17,7 @@ const store = createStore(
   reducers,
   {},
   composeEnhancers(
-  applyMiddleware(thunk)
+  applyMiddleware(promise(),thunk)
 )
 );
 ReactDOM.render(

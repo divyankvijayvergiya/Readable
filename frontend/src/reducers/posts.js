@@ -6,11 +6,10 @@ const posts = (state = {}, action) => {
   } = action;
   switch (action.type) {
     case RECEIVE_POSTS:
-      return posts.reduce((map, obj) => {
-            map[obj.name] = obj
-            return map
-          }, { ...state }
-        )
+      return {
+        ...state,
+        posts,
+      }
 
 
     default:
