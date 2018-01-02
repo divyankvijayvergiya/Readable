@@ -13,7 +13,7 @@ const headers = {
 // Categories
 export const fetchCategories = () =>
   fetch(`${api}/categories`, { headers })
-    .then(res => res.json())
+    .then(res => console.log(res.json()))
     .then(data => data.categories)
 
 

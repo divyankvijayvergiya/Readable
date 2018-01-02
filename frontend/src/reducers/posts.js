@@ -6,17 +6,21 @@ const posts = (state = {items: {}}, action) => {
   } = action;
   switch (action.type) {
     case RECEIVE_POSTS:
-      return {
-        ...state,
-        items: action.posts.reduce((prev, post) => {
+
+      const posts = action.posts;
+
+      const items =  posts.reduce((prev, post)=>{
           prev[post.id] = post
-          return prev
-        }, state.items )
-      }
+          return prev;
+        }, state.items);
 
+        return{
+          ...state,
+          items
+        }
 
-    default:
-      return state
+      default:
+        return state
   }
 }
 
