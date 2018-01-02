@@ -10,17 +10,17 @@ const PostItem = post =>{
       className = "list-group-item"
       onClick= {()=>{}}
     >
-      <Grid>
-      <Row className="show-grid">
-      <Col xs={4} md={2}></Col>
-      <Col xs={8} md={10}>
-        <h3>{post.title}</h3>
-        <p>Category: {post.category} | Date Posted: {post.timestamp}</p>
-        <p>{post.body}</p>
-        <p><em>Comments: {post.commentCount}</em></p>
-      </Col>
-    </Row>
-      </Grid>
+        <Grid>
+            <Row className="show-grid">
+              <Col xs={4} md={2}></Col>
+              <Col xs={8} md={10}>
+                <h3>{post.title}</h3>
+                <p>Category: {post.category} | Date Posted: {post.timestamp}</p>
+                <p>{post.body}</p>
+                <p><em>Comments: {post.commentCount}</em></p>
+              </Col>
+           </Row>
+        </Grid>
 
     </li>
   )
