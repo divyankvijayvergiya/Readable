@@ -4,6 +4,13 @@ import {fetchPosts, fetchPostsByCategory} from '../actions/posts';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 
 
+const postItem = post =>{
+  return(
+    <li
+      className = "list-group-item"
+      onClick= {()=>{}}
+  )
+}
 
 class ContainerPost extends Component{
   componentDidMount(){
@@ -15,15 +22,15 @@ class ContainerPost extends Component{
 
     return (
       <ListGroup>
-      {posts.length > 0 && posts.map((post) => {
-       return (
-         <ListGroupItem
-           key={post.key}
-           header={post.title}
-           >
-           {post.body}
-         </ListGroupItem>)
-     })}
+        {posts.length > 0 && posts.map((post) => {
+         return (
+           <ListGroupItem
+             key={post.key}
+             header={post.title}
+             >
+             {post.body}
+           </ListGroupItem>)
+       })}
 
      </ListGroup>
 
