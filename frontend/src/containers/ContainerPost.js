@@ -1,14 +1,28 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {fetchPosts, fetchPostsByCategory} from '../actions/posts';
-import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import { ListGroup, ListGroupItem, Grid, Row, Col } from 'react-bootstrap';
 
 
-const postItem = post =>{
+const PostItem = post =>{
   return(
     <li
       className = "list-group-item"
       onClick= {()=>{}}
+    >
+      <Grid>
+      <Row className="show-grid">
+      <Col xs={4} md={2}></Col>
+      <Col xs={8} md={10}>
+        <h3>{post.title}</h3>
+        <p>Category: {post.category} | Date Posted: {post.timestamp}</p>
+        <p>{post.body}</p>
+        <p><em>Comments: {post.commentCount}</em></p>
+      </Col>
+    </Row>
+      </Grid>
+
+    </li>
   )
 }
 
@@ -24,12 +38,11 @@ class ContainerPost extends Component{
       <ListGroup>
         {posts.length > 0 && posts.map((post) => {
          return (
-           <ListGroupItem
+           <PostItem
              key={post.key}
-             header={post.title}
-             >
-             {post.body}
-           </ListGroupItem>)
+             post={post}
+             />
+          )
        })}
 
      </ListGroup>
