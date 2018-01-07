@@ -26,7 +26,7 @@ class Header extends Component{
                 const {name, path} = category
                 return (
 
-                  <MenuItem key={path} eventKey={key}>{capitalize(name)}</MenuItem>
+                  <MenuItem key={path} eventKey={key} href = {`/${name}`}>{capitalize(name)}</MenuItem>
                 )
               })}
 

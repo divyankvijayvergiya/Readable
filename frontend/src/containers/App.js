@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {fetchCategories, fetchPosts} from '../utils/api';
 import Header from '../components/Header';
 import ContainerPost from '../containers/ContainerPost';
+import { Switch, Route, withRouter } from 'react-router-dom';
 
 class App extends Component {
   render() {
@@ -9,7 +10,10 @@ class App extends Component {
       <div className="App">
         <Header />
         <div className= "container">
-          <ContainerPost/>
+          <Switch>
+            <Route exact path ='/' component= {ContainerPost}/>
+            <Route exact path ='/:category' component= {ContainerPost}/>
+          </Switch>
         </div>
 
       </div>
@@ -17,4 +21,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);

@@ -14,19 +14,10 @@ export const receivePosts = (posts) =>{
 }
 }
 
-export const fetchPosts = ()  =>{
+export const fetchPosts = (category)  =>{
   return dispatch => {
     dispatch(requestPosts());
-    return api.fetchPosts()
-      .then(posts => dispatch(receivePosts(posts)))
-  }
-
-}
-
-export const fetchPostsByCategory = (category)  =>{
-  return dispatch => {
-    dispatch(requestPosts(category));
-    return api.fetchPosts()
+    return api.fetchPosts(category)
       .then(posts => dispatch(receivePosts(posts)))
   }
 
