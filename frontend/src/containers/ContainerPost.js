@@ -4,6 +4,8 @@ import {fetchPosts} from '../actions/posts';
 import { ListGroup, ListGroupItem, Grid, Row, Col } from 'react-bootstrap';
 import Moment from 'react-moment';
 import { capitalize } from '../utils/helper';
+import { Layout, Button } from 'antd';
+
 
 
 
@@ -67,6 +69,9 @@ class ContainerPost extends Component{
          )}
 
      </ListGroup>
+
+
+
 
     );
   }
