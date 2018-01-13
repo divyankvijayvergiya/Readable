@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import RouteNavItem from "../components/RouteNavItems";
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 import {fetchCategories} from '../actions/categories';
 import { capitalize } from '../utils/helper';
@@ -34,7 +35,7 @@ class Header extends Component{
         </Nav>
         <Nav pullRight>
 
-            <NavItem eventKey={1} href="/new"> Add New Posts </NavItem>
+            <RouteNavItem eventKey={1} href="/new"> Add New Posts </RouteNavItem>
 
         </Nav>
       </Navbar.Collapse>

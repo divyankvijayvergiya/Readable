@@ -82,7 +82,6 @@ class PostFormContainer extends Component {
     }
     return (
       <Layout style={{ minHeight: '100vh'}}>
-        <Header/>
         <Layout>
             <Layout.Header style={styles.layoutHeader}>
               <Breadcrumb category={this.state.editMode ? 'Edit Post' : 'New Post'}/>
