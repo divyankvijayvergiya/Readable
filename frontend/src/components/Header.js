@@ -33,7 +33,9 @@ class Header extends Component{
           </NavDropdown>
         </Nav>
         <Nav pullRight>
-          <NavItem eventKey={1} href="#"> Add New Posts </NavItem>
+
+            <NavItem eventKey={1} href="/new"> Add New Posts </NavItem>
+
         </Nav>
       </Navbar.Collapse>
     </Navbar>

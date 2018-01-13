@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col } from 'antd';
+import ReactMarkdown from 'react-markdown';
 import { capitalize, calculateDate } from '../utils/helper';
 
 class PostDetail extends Component {
   render(){
-    const { post } = this.props;
+    const { post, comments } = this.props;
     return (
       <div>
         <div style={styles.postDetailContainer}>
@@ -31,6 +32,30 @@ class PostDetail extends Component {
     )
 
   }
+}
+const styles = {
+  postDetailContainer: {
+    marginBottom: 15,
+    padding: 20,
+    background: '#fff',
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 600,
+  },
+  votes: {
+    fontSize: 18,
+    textAlign: 'right',
+  },
+  meta: {
+    marginTop: 8,
+    fontSize: 15,
+    color: '#00000073',
+  },
+  content: {
+    marginTop: 20,
+    fontSize: 16,
+  },
 }
 
 export default PostDetail;

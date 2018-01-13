@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import {fetchCategories, fetchPosts} from '../utils/api';
 import Header from '../components/Header';
 import ContainerPost from '../containers/ContainerPost';
+import PostDetailContainer from '../containers/PostDetailContainer';
 import { Switch, Route, withRouter } from 'react-router-dom';
+import PostFormContainer from '../containers/PostFormContainer';
 
 class App extends Component {
   render() {
@@ -11,8 +13,10 @@ class App extends Component {
         <Header />
         <div className= "container">
           <Switch>
+            <Route exact path='/new' component={PostFormContainer} />
             <Route exact path ='/' component= {ContainerPost}/>
             <Route exact path ='/:category' component= {ContainerPost}/>
+            <Route exact path='/:category/:id' component={PostDetailContainer} />
           </Switch>
         </div>
 
