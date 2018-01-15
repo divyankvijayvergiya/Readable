@@ -1,49 +1,20 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {fetchPosts} from '../actions/posts';
-import { ListGroup, ListGroupItem, Grid, Row, Col } from 'react-bootstrap';
-import Moment from 'react-moment';
-import { capitalize } from '../utils/helper';
-import { Layout, Button } from 'antd';
+import { Layout, Row, Col, Button } from 'antd';
+import { fetchPosts, deletePost } from '../actions/posts';
+import Sidebar from '../components/Sidebar';
+import SortBy from '../components/SortBy';
 import Breadcrumb from '../components/Breadcrumb';
 import PostList from '../components/PostList';
 import NoPosts from '../components/NoPosts';
 
-
-
-const PostItem = props =>{
-  const { post } = props;
-  return(
-    <li
-      className = "list-group-item"
-      onClick= {()=>{}}
-    >
-        <Grid>
-            <Row className="show-grid">
-              <Col xs={2} md={1} className =" text-center">
-                <h1>{post.voteScore}</h1>
-              </Col>
-              <Col xs={10} md={11}>
-                <h3>{post.title}</h3>
-                <p>
-                  Category: {post.category} | Date Posted: <Moment format="dddd, MMM Do YYYY, h:mm:ss A">{post.timestamp}</Moment>
-                </p>
-                <p>{post.body}</p>
-                <p><em>Comments: {post.commentCount}</em></p>
-              </Col>
-           </Row>
-        </Grid>
-
-    </li>
-  )
-}
-
-class ContainerPost extends Component{
+class ContainerPost extends Component {
   state = {
     sortBy: 'date'
   }
 
-  componentWillMount(){
+  componentWillMount() {
     const category = this.props.match.params.category;
     this.props.fetchPosts(category);
   }
@@ -55,50 +26,88 @@ class ContainerPost extends Component{
     }
   }
 
-
+  renderPosts = (posts, category) => {
+    if (posts.length > 0) {
+      return (
+        <PostList
+          posts={posts}
+          category={category}
+          sortBy={this.state.sortBy}
+          deletePost={this.props.deletePost}
+        />
+      )
+    }
+    return <NoPosts category={category} />
+  }
 
   onSortChange = (sortBy) => {
     this.setState({ sortBy })
   }
 
-
-
-  render(){
+  render() {
     const { posts, match } = this.props;
     const category = match.params.category;
-
-
     return (
-      <ListGroup>
-          {posts.length > 0 ? posts.map((post) => {
-           return (
-             <PostItem
-               key={post.key}
-               post={post}
-               />
-            )
-         }) : (
-             <div>
-              <h2>No posts in { match.params.category && capitalize(this.props.match.params.category) }.</h2>
-             </div>
-         )}
-
-     </ListGroup>
-
-
-
-
-    );
+      <Layout style={{ minHeight: '100vh' }}>
+        <Sidebar />
+        <Layout>
+          <Layout.Header style={styles.layoutHeader}>
+            <Breadcrumb category={category} />
+            <Link to="/new">
+              <Button type="primary" icon="plus" size="small">
+                Add New Post
+              </Button>
+            </Link>
+          </Layout.Header>
+          <Layout.Content style={styles.layoutContent}>
+            <Row>
+              <Col span={12}>
+                <div style={styles.title}>Posts</div>
+              </Col>
+              <Col span={12}>
+                <SortBy align="right" onSortChange={this.onSortChange} />
+              </Col>
+            </Row>
+            {this.renderPosts(posts, category)}
+          </Layout.Content>
+        </Layout>
+      </Layout>
+    )
   }
-
 }
 
-const mapStateToProps = ({ posts })=> ({
-  posts: Object.keys(posts.items).map(k => posts.items[k]),
-})
-const mapDispatchToProps = dispatch => ({
-  fetchPosts: category => dispatch(fetchPosts(category)) ,
+const styles = {
+  layoutHeader: {
+    height: 72,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginLeft: 20,
+    marginRight: 20,
+    padding: 20,
+    backgroundColor: '#21618C',
+    lineHeight: '12px',
+  },
+  layoutContent: {
+    margin: 20,
+  },
+  title: {
+    marginLeft: 2,
+    fontSize: 24,
+    fontWeight: 600,
+  },
+  addNewPostBtn: {
+    textAlign: 'right',
+  },
+}
 
+const mapStateToProps = ({ posts }) => ({
+  posts,
+})
+
+const mapDispatchToProps = dispatch => ({
+  fetchPosts: category => dispatch(fetchPosts(category)),
+  deletePost: post => dispatch(deletePost(post)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContainerPost);

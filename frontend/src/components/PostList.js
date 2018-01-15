@@ -7,7 +7,7 @@ import {
   calculateDate,
   sortByDate,
   sortByVotes,
-} from '../utils/helper';
+} from '../utils/helpers';
 
 class PostList extends Component {
   sortPosts = (posts, sortBy) => {

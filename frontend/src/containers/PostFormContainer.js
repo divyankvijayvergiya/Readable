@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import { Layout, Row, Col, Form, Input, Button, Select } from 'antd';
 import { fetchCategories } from '../actions/categories';
 import { addPost, editPost } from '../actions/posts';
-import { capitalize } from '../utils/helper';
+import { capitalize } from '../utils/helpers';
+import Sidebar from '../components/Sidebar';
 import Breadcrumb from '../components/Breadcrumb';
 
 class PostFormContainer extends Component {
@@ -80,6 +81,7 @@ class PostFormContainer extends Component {
 
     return (
       <Layout style={{ minHeight: '100vh' }}>
+        <Sidebar />
         <Layout>
           <Layout.Header style={styles.layoutHeader}>
             <Breadcrumb category={this.state.editMode ? 'Edit Post' : 'New Post'} />
@@ -93,12 +95,17 @@ class PostFormContainer extends Component {
                 <Input value={this.state.author} onChange={(e) => this.handleInputChange(e, "author")}/>
               </Form.Item>
               <Form.Item label="Category">
-                <Input
+                <Select
                   size="small"
                   value={this.state.category}
                   onChange={(e) => this.handleInputChange(e, "category")}
                 >
-                </Input>
+                  {categories.length > 0 && categories.map((category, key) => (
+                    <Select.Option key={category.name} value={category.name}>
+                      {capitalize(category.name)}
+                    </Select.Option>
+                  ))}
+                </Select>
               </Form.Item>
               <Form.Item label={this.renderLabel()}>
                 <Input.TextArea

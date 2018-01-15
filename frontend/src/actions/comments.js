@@ -3,10 +3,10 @@ import * as api from '../utils/api';
 import {
   RECEIVE_COMMENTS,
   RECEIVE_COMMENT,
-} from './constant';
+} from './constants';
 
-export const fetchComments = (id) =>{
-  return dispatch =>{
+export const fetchComments = (id) => {
+  return dispatch => {
     return api.fetchComments(id)
       .then(comments => dispatch({
         type: RECEIVE_COMMENTS,
@@ -15,29 +15,28 @@ export const fetchComments = (id) =>{
   }
 }
 
-export const fetchComment = (id) =>{
+export const fetchComment = (id) => {
   return dispatch => {
     return api.fetchComment(id)
-    .then(comment => dispatch({
-      type: RECEIVE_COMMENT,
-      comment
-    }))
+      .then(comment => dispatch({
+        type: RECEIVE_COMMENT,
+        comment
+      }))
   }
 }
 
-export const voteComment = (id, option) =>{
+export const voteComment = (id, option) => {
   return dispatch => {
     return api.voteComment(id, option)
-    .then(comment => api.fetchComments(comment.parentId)
-      .then(comments => dispatch({
-        type: RECEIVE_COMMENTS,
-        comments
-      })
-    ))
+      .then(comment => api.fetchComments(comment.parentId)
+        .then(comments => dispatch({
+          type: RECEIVE_COMMENTS,
+          comments
+        })))
   }
 }
 
-export const addComment = (comment)=>{
+export const addComment = (comment) => {
   comment = {
     ...comment,
     id: uuid.v4(),
@@ -46,9 +45,10 @@ export const addComment = (comment)=>{
 
   return dispatch => {
     return api.addComment(comment)
-      .then(comment=> api.fetchComments(comment.parentId)
+      .then(comment => api.fetchComments(comment.parentId)
         .then(comments => dispatch({
-
+          type: RECEIVE_COMMENTS,
+          comments
         })))
   }
 }

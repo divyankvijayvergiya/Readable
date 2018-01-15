@@ -1,18 +1,10 @@
-import { REQUEST_CATEGORIES, RECEIVE_CATEGORIES } from '../actions/constant';
+import { RECEIVE_CATEGORIES } from '../actions/constants';
 
 const categories = (state = {}, action) => {
-  const {
-    categories
-  } = action;
+  const { categories } = action;
   switch (action.type) {
     case RECEIVE_CATEGORIES:
-      return categories.reduce((map, obj) => {
-            map[obj.name] = obj
-            return map
-          }, { ...state }
-        )
-
-
+      return categories
     default:
       return state
   }

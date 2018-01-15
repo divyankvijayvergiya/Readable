@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
 import { Row, Col, List, Button, Input } from 'antd';
 import { deleteComment, editComment } from '../actions/comments';
-import { calculateDate } from '../utils/helper';
+import { calculateDate } from '../utils/helpers';
 import Voter from '../components/Voter';
 
 class Comment extends Component {

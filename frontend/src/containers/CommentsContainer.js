@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Row, Col, List, Button, Input } from 'antd';
 import { addComment } from '../actions/comments';
-import { sortByDate, sortByVotes } from '../utils/helper';
+import { sortByDate, sortByVotes } from '../utils/helpers';
 import Comment from '../components/Comment';
 import SortBy from '../components/SortBy';
 

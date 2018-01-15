@@ -1,30 +1,20 @@
-import { REQUEST_POSTS, RECEIVE_POSTS, RECEIVE_POST } from '../actions/constant';
+import {
+  RECEIVE_POSTS,
+  RECEIVE_POST,
+  // ADD_POST,
+  // DELETE_POST,
+  // EDIT_POST
+} from '../actions/constants';
 
-const posts = (state = {items: {}}, action) => {
-  const {
-    posts
-  } = action;
+const posts = (state = {}, action) => {
+  const { posts, post } = action;
   switch (action.type) {
     case RECEIVE_POSTS:
-
-      const posts = action.posts;
-      const post = action.post;
-
-      const items =  posts.reduce((prev, post)=>{
-          prev[post.id] = post
-          return prev;
-        }, state.items);
-
-        return{
-          ...state,
-          items
-        }
-
+      return posts
     case RECEIVE_POST:
-        return post
-
-      default:
-        return state
+      return post
+    default:
+      return state
   }
 }
 

@@ -6,39 +6,35 @@ import { voteComment } from '../actions/comments';
 
 class Voter extends Component {
   upVote = () => {
-    const { item, single} =  this.props;
+    const { item, single } = this.props;
     const isPost = 'commentCount' in item;
-    if(isPost){
-      if(single)
+    if (isPost) {
+      if (single)
         this.props.votePostDetail(item.id, 'upVote');
       else
         this.props.votePost(item.id, 'upVote');
-
-
-    }
-    else{
+    } else {
       this.props.voteComment(item.id, 'upVote');
     }
   }
 
   downVote = () => {
-    const { item, single} =this.props;
+    const { item, single } = this.props;
     const isPost = 'commentCount' in item;
-    if(isPost){
-      if(single)
+    if (isPost) {
+      if (single)
         this.props.votePostDetail(item.id, 'downVote');
       else
         this.props.votePost(item.id, 'downVote');
-    }
-    else{
+    } else {
       this.props.voteComment(item.id, 'downVote');
     }
   }
 
-  render(){
+  render() {
     const { item } = this.props;
     const votes = item.voteScore;
-    return(
+    return (
       <span>
         <Button
           type="dashed"
@@ -47,7 +43,6 @@ class Voter extends Component {
           style={styles.icon}
           onClick={() => this.upVote()}
         />
-
         <Button
           type="dashed"
           size="small"
@@ -59,7 +54,6 @@ class Voter extends Component {
           {votes}
         </span>
       </span>
-
     )
   }
 }

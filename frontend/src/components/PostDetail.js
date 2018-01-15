@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { Row, Col } from 'antd';
-import CommentContainer from '../containers/CommentContainer';
+import CommentsContainer from '../containers/CommentsContainer';
 import Voter from '../components/Voter';
-import { capitalize, calculateDate } from '../utils/helper';
+import { capitalize, calculateDate } from '../utils/helpers';
 
 class PostDetail extends Component {
   render() {
@@ -30,7 +30,7 @@ class PostDetail extends Component {
             <ReactMarkdown source={post.body} />
           </div>
         </div>
-        <CommentContainer comments={comments} />
+        <CommentsContainer comments={comments} />
       </div>
     )
   }

@@ -4,20 +4,20 @@ import { connect } from 'react-redux';
 import { Layout, Icon, Button } from 'antd';
 import { fetchPost, deletePost } from '../actions/posts';
 import { fetchComments } from '../actions/comments';
+import Sidebar from '../components/Sidebar';
 import PostDetail from '../components/PostDetail';
-import Header from '../components/Header';
 
 class PostDetailContainer extends Component {
   state = {
     redirect: false,
   }
 
-  componentDidMount(){
+  componentDidMount() {
     const id = this.props.match.params.id;
     this.props.fetchPost(id);
     this.props.fetchComments(id);
-
   }
+
   handleDelete = (post) => {
     this.props.deletePost(post)
       .then(() => this.setState({
@@ -25,57 +25,51 @@ class PostDetailContainer extends Component {
       }));
   }
 
+  render() {
+    const { post, comments } = this.props;
 
-render(){
-  const { post, comments } = this.props;
+    if (Object.keys(post).length === 0) {
+      return <Redirect to="/oops" />
+    }
 
-  if(Object.keys(post).length === 0){
-    return <Redirect to="/oops"/>
-  }
+    if (this.state.redirect) {
+      return <Redirect to="/" />
+    }
 
-  if (this.state.redirect){
-    return <Redirect to ="/"/>
-  }
-
-  return(
-    <Layout style={styles.layout}>
-      <Layout>
-        <Layout.Header style={styles.layoutHeader}>
-          <Link to="/">
-            <Icon type="arrow-left" style={styles.icon}/>
-            Go Back
-          </Link>
-          <span>
-            <Link to={{ pathname: '/edit', state: { post } }}>
-              <Button icon="edit" size="small" style={styles.btn}>
-                Edit
-              </Button>
+    return (
+      <Layout style={styles.layout}>
+        <Sidebar />
+        <Layout>
+          <Layout.Header style={styles.layoutHeader}>
+            <Link to="/">
+              <Icon type="arrow-left" style={styles.icon} />
+              Go Back
             </Link>
-            <Button
-              type="danger"
-              icon="delete"
-              size="small"
-              style={styles.btn}
-              onClick={() => this.handleDelete(post)}
-              ghost
-            >
-              Delete
-            </Button>
-          </span>
+            <span>
+              <Link to={{ pathname: '/edit', state: { post } }}>
+                <Button icon="edit" size="small" style={styles.btn}>
+                  Edit
+                </Button>
+              </Link>
+              <Button
+                type="danger"
+                icon="delete"
+                size="small"
+                style={styles.btn}
+                onClick={() => this.handleDelete(post)}
+                ghost
+              >
+                Delete
+              </Button>
+            </span>
           </Layout.Header>
           <Layout.Content style={styles.layoutContent}>
-            {post && <PostDetail post={post} comments={comments}/>}
+            {post && <PostDetail post={post} comments={comments} />}
           </Layout.Content>
         </Layout>
       </Layout>
-
-
-
-
-  );
-
- }
-
+    );
+  }
 }
 
 const styles = {
@@ -105,7 +99,7 @@ const styles = {
   }
 }
 
-const mapStateToProps = ({ posts, comments }) =>({
+const mapStateToProps = ({ posts, comments }) => ({
   post: posts,
   comments: comments,
 })
@@ -114,7 +108,6 @@ const mapDispatchToProps = dispatch => ({
   fetchPost: id => dispatch(fetchPost(id)),
   deletePost: id => dispatch(deletePost(id)),
   fetchComments: id => dispatch(fetchComments(id)),
-
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostDetailContainer);
