@@ -17,7 +17,6 @@ export const calculateDate = (date) =>{
 
 export const sortByDate = (list) =>{
   return list.sort((a,b) => a.timestamp < b.timestamp)
-
 }
 
 export const sortByVotes = (list) => {

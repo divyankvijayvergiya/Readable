@@ -33,11 +33,11 @@ class Header extends Component{
 
           </NavDropdown>
         </Nav>
-        <Nav pullRight>
+      //  <Nav pullRight>
 
             <RouteNavItem eventKey={1} href="/new"> Add New Posts </RouteNavItem>
 
-        </Nav>
+      //  </Nav>
       </Navbar.Collapse>
     </Navbar>
     );

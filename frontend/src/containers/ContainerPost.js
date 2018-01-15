@@ -5,7 +5,9 @@ import { ListGroup, ListGroupItem, Grid, Row, Col } from 'react-bootstrap';
 import Moment from 'react-moment';
 import { capitalize } from '../utils/helper';
 import { Layout, Button } from 'antd';
-
+import Breadcrumb from '../components/Breadcrumb';
+import PostList from '../components/PostList';
+import NoPosts from '../components/NoPosts';
 
 
 
@@ -37,21 +39,34 @@ const PostItem = props =>{
 }
 
 class ContainerPost extends Component{
-  componentDidMount(){
+  state = {
+    sortBy: 'date'
+  }
+
+  componentWillMount(){
     const category = this.props.match.params.category;
     this.props.fetchPosts(category);
   }
 
-  componentWillRecieveProps(nextProps) {
-    if (nextProps.match.params.category !== this.props.match.params.category){
-      const category = nextProps.props.match.params.category;
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.match.params.category !== this.props.match.params.category) {
+      const category = nextProps.match.params.category;
       this.props.fetchPosts(category);
-
     }
   }
 
+
+
+  onSortChange = (sortBy) => {
+    this.setState({ sortBy })
+  }
+
+
+
   render(){
     const { posts, match } = this.props;
+    const category = match.params.category;
+
 
     return (
       <ListGroup>

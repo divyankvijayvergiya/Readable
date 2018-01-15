@@ -29,11 +29,11 @@ export const voteComment = (id, option) =>{
   return dispatch => {
     return api.voteComment(id, option)
     .then(comment => api.fetchComments(comment.parentId)
-      .then(comment => dispatch({
+      .then(comments => dispatch({
         type: RECEIVE_COMMENTS,
         comments
       })
-    )
+    ))
   }
 }
 
@@ -66,8 +66,8 @@ export const deleteComment = (comment) => {
 
 export const editComment = (comment) => {
   return dispatch => {
-    return ReadableAPI.editComment(comment)
-      .then(comment => ReadableAPI.fetchComments(comment.parentId)
+    return api.editComment(comment)
+      .then(comment => api.fetchComments(comment.parentId)
         .then(comments => dispatch({
           type: RECEIVE_COMMENTS,
           comments

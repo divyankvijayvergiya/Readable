@@ -7,10 +7,9 @@ import { fetchCategories } from '../actions/categories';
 import { addPost, editPost } from '../actions/posts';
 import { capitalize } from '../utils/helper';
 import Breadcrumb from '../components/Breadcrumb';
-import Header from '../components/Header';
 
 class PostFormContainer extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     const { location } = props;
     const post = location.state ? location.state.post : null;
@@ -19,11 +18,10 @@ class PostFormContainer extends Component {
       editMode: location.pathname === '/edit',
       redirect: false,
       id: post ? post.id : uuid.v4(),
-      title : post ? post.title : '',
+      title: post ? post.title : '',
       author: post ? post.author : '',
       category: post ? post.category : '',
       body: post ? post.body : '',
-
     }
   }
 
@@ -37,7 +35,7 @@ class PostFormContainer extends Component {
     });
   }
 
-  handleSubmit = () =>{
+  handleSubmit = () => {
     const post = {
       id: this.state.id,
       title: this.state.title,
@@ -57,15 +55,14 @@ class PostFormContainer extends Component {
           redirect: !this.state.redirect,
         }));
     }
-
   }
 
-  renderLabel = () =>{
+  renderLabel = () => {
     return (
-      <Row type= "flex" align= "bottom" justify= "space-between">
-        <Col> Tell us what's up...</Col>
+      <Row type="flex" align="bottom" justify="space-between">
+        <Col>Tell us what's up...</Col>
         <Col style={styles.subtext}>
-          Supports <Link to="https://github.github.com/gfm" target="_blank">
+          Supports <Link to="https://github.github.com/gfm/" target="_blank">
             Github Flavored Markdown
           </Link>
         </Col>
@@ -77,63 +74,57 @@ class PostFormContainer extends Component {
     const { categories } = this.props;
     const { category, id } = this.state;
 
-    if (this.state.redirect){
-      return <Redirect to={`/${category}/${id}`}/>
+    if (this.state.redirect) {
+      return <Redirect to={`/${category}/${id}`} />
     }
+
     return (
-      <Layout style={{ minHeight: '100vh'}}>
+      <Layout style={{ minHeight: '100vh' }}>
         <Layout>
-            <Layout.Header style={styles.layoutHeader}>
-              <Breadcrumb category={this.state.editMode ? 'Edit Post' : 'New Post'}/>
-            </Layout.Header>
-            <Layout.Content style={styles.layoutContent}>
-              <Form layout="vertical" style={styles.form}>
-                <Form.Item label="Title">
-                  <Input value={this.state.title} onChange={(e) => this.handleInputChange(e, "title")} />
-                </Form.Item>
-                <Form.Item label="Username">
-                 <Input value={this.state.author} onChange={(e) => this.handleInputChange(e, "author") }/>
-                </Form.Item>
-                <Form.Item label="Category">
-                  <Select
-                    size="small"
-                    value={this.state.category}
-                    onChange={(e) => this.handleInputChange(e, "category")}
-                  >
-                    {categories.length > 0 && categories.map((category, key) => (
-                      <Select.Option key ={category.name} value={category.name}>
-                        {capitalize(category.name)}
-                      </Select.Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-                <Form.Item label={this.renderLabel()}>
-                  <Input.TextArea
-                    rows={10}
-                    value={this.state.body}
-                    onChange={(e) => this.handleInputChange(e, "body")}
-                  />
-                </Form.Item>
-                <Form.Item>
-                  <Button
-                    type="primary"
-                    style={styles.button}
-                    onClick={this.handleSubmit}
-                  >
-                    {this.state.editMode ? 'Save' : 'Publish'}
-                  </Button>
-                  <Link to="/">
-                    <Button style={styles.button}>Cancel</Button>
-                  </Link>
-                </Form.Item>
-              </Form>
-            </Layout.Content>
-          </Layout>
+          <Layout.Header style={styles.layoutHeader}>
+            <Breadcrumb category={this.state.editMode ? 'Edit Post' : 'New Post'} />
+          </Layout.Header>
+          <Layout.Content style={styles.layoutContent}>
+            <Form layout="vertical" style={styles.form}>
+              <Form.Item label="Title">
+                <Input value={this.state.title} onChange={(e) => this.handleInputChange(e, "title")} />
+              </Form.Item>
+              <Form.Item label="Username">
+                <Input value={this.state.author} onChange={(e) => this.handleInputChange(e, "author")}/>
+              </Form.Item>
+              <Form.Item label="Category">
+                <Input
+                  size="small"
+                  value={this.state.category}
+                  onChange={(e) => this.handleInputChange(e, "category")}
+                >
+                </Input>
+              </Form.Item>
+              <Form.Item label={this.renderLabel()}>
+                <Input.TextArea
+                  rows={10}
+                  value={this.state.body}
+                  onChange={(e) => this.handleInputChange(e, "body")}
+                />
+              </Form.Item>
+              <Form.Item>
+                <Button
+                  type="primary"
+                  style={styles.button}
+                  onClick={this.handleSubmit}
+                >
+                  {this.state.editMode ? 'Save' : 'Publish'}
+                </Button>
+                <Link to="/">
+                  <Button style={styles.button}>Cancel</Button>
+                </Link>
+              </Form.Item>
+            </Form>
+          </Layout.Content>
         </Layout>
+      </Layout>
     )
   }
-
-
 }
 
 const styles = {
@@ -173,11 +164,10 @@ const mapStateToProps = ({ categories }) => ({
   categories,
 })
 
-const mapDispatchToProps = dispatch =>({
+const mapDispatchToProps = dispatch => ({
   addPost: post => dispatch(addPost(post)),
   editPost: post => dispatch(editPost(post)),
   fetchCategories: () => dispatch(fetchCategories()),
-
 })
 
 const NewPostForm = Form.create()(PostFormContainer);
