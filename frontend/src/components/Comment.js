@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
-import { Row, Col, List, Button, Input} from 'antd';
+import { Row, Col, List, Button, Input } from 'antd';
 import { deleteComment, editComment } from '../actions/comments';
 import { calculateDate } from '../utils/helper';
 import Voter from '../components/Voter';
@@ -13,40 +13,41 @@ class Comment extends Component {
     comment: this.props.comment.body || '',
   }
 
-  handleEditComment = () =>{
+  handleEditComment = () => {
     this.setState({
       editMode: !this.state.editMode,
     });
   }
 
-  handleChange = (e) =>{
+  handleChange = (e) => {
     this.setState({
-      comment: e.targer.value,
+      comment: e.target.value,
     });
   }
 
-  saveComment = (comment) =>{
+  saveComment = (comment) => {
     comment = {
       ...comment,
       author: comment.author,
       body: this.state.comment,
       parentId: comment.parentId,
     };
+
     this.props.editComment(comment);
     this.setState({
       editMode: !this.state.editMode,
     });
   }
 
-  renderCommentDisplay = (comment)=> {
-    if(this.state.editMode){
-      return(
+  renderCommentDisplay = (comment) => {
+    if (this.state.editMode) {
+      return (
         <span>
           <Input.TextArea
             rows={2}
             placeholder={'Write a comment'}
-            value
-            ={this.handleChange}
+            value={this.state.comment}
+            onChange={this.handleChange}
           />
           <Row type="flex" align="middle" justify="space-between">
             <Col>
@@ -62,21 +63,26 @@ class Comment extends Component {
                 onClick={this.handleEditComment}
               >Cancel</Button>
             </Col>
+            <Col>
+              Supports <Link to="https://github.github.com/gfm/" target="_blank">
+                Github Flavored Markdown
+              </Link>
+            </Col>
           </Row>
         </span>
       )
     }
 
-    return <ReactMarkdown source={comment.body}/>;
+    return <ReactMarkdown source={comment.body} />;
   }
 
-  render(){
+  render() {
     const { comment } = this.props;
     return (
       <List.Item
         key={comment.id}
         actions={[
-          <Voter item={comment}/>
+          <Voter item={comment} />,
           <Button
             size="small"
             type="dashed"
@@ -89,7 +95,7 @@ class Comment extends Component {
             size="small"
             type="dashed"
             style={styles.actionText}
-            onClick={()=> this.props.deleteComment(comment)}
+            onClick={() => this.props.deleteComment(comment)}
           >
             Delete
           </Button>,
@@ -100,10 +106,11 @@ class Comment extends Component {
             <span>
               <Link to="#" style={styles.author}>{comment.author}</Link>
               <span style={styles.date}>{calculateDate(comment.timestamp)}</span>
+            </span>
           }
         />
         {this.renderCommentDisplay(comment)}
-        </List.Item>
+      </List.Item>
     )
   }
 }
